@@ -1,11 +1,19 @@
 {
+   "scripts": {
+    "build": "webpack",
+    "dev": "webpack serve --open",
+    "deploy": "git subtree push --prefix dist origin gh-pages"
+  },
   "devDependencies": {
-    "@eslint/css": "^0.7.0",
+    "@babel/preset-react": "^7.27.1",
+    "@eslint/css": "^0.10.0",
     "@eslint/js": "^9.25.1",
-    "@eslint/json": "^0.12.0",
+    "@eslint/json": "^0.13.0",
     "@eslint/markdown": "^6.4.0",
+    "babel-preset-airbnb": "^5.0.0",
     "css-loader": "^7.1.2",
     "eslint": "^9.25.1",
+    "eslint-config-prettier": "^10.1.8",
     "globals": "^16.0.0",
     "html-loader": "^5.1.0",
     "html-webpack-plugin": "^5.6.3",
@@ -14,5 +22,8 @@
     "webpack": "^5.99.5",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.1"
+  },
+  "dependencies": {
+    "airbnb-browser-shims": "^3.3.0"
   }
 }
