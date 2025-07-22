@@ -1,16 +1,14 @@
 /* eslint-disable no-undef */
 
-//import Ship, {destroyer, carrier}  from "./ship";
+import Ship from "./ship";
 import Gameboard from "./gameboard";
-class Ship {
 
-}
 
-let destroyer = new Ship();
-let submarine = new Ship();
-let cruiser = new Ship();
-let battleship = new Ship();
-let carrier = new Ship();
+let destroyer = new Ship("d", 2, 0, false);
+let submarine = new Ship("s", 3, 0);
+let cruiser = new Ship("cr", 3, 0);
+let battleship = new Ship("b", 4, 0);
+let carrier = new Ship("ca", 5, 0);
 
 let gameboard_1 = new Gameboard()
 
@@ -19,7 +17,7 @@ describe("test first game board", () => {
         expect(gameboard_1.board.length).toBe(10);
         expect(gameboard_1.board.every((el) => el.length = 10)).toBe(true);
     })
-    test("place the destroyer horizontally to (0, 0)", () => {
+    test("place the destroyer horizontally at (0, 0)", () => {
         gameboard_1.placeShipAt(destroyer, 0, 0);
         let arrayOfMark = [];
         for (let i = 0; i < destroyer.length; i++) {
@@ -27,13 +25,16 @@ describe("test first game board", () => {
         }
         expect(arrayOfMark.every(el => el === destroyer.mark)).toBe(true)
     })
-    test("place the submarine vertically to (0, 0)", () => {
-        gameboard_1.placeShipAt(submarine, 0, 0);
+    test("place the submarine vertically at (5, 5)", () => {
+        gameboard_1.placeShipAt(submarine, 5, 5);
         let arrayOfMark = [];
         for (let i = 0; i < submarine.length; i++) {
-            arrayOfMark.push(gameboard_1.board[i][0])
+            arrayOfMark.push(gameboard_1.board[5 + i][5])
+            console.log(gameboard_1.board[0][5]);
         }
         expect(arrayOfMark.every(el => el === submarine.mark)).toBe(true)
+        //expect(submarine.length).toEqual(7)
+        expect(gameboard_1.board).toEqual(["1", "r", "44s", "sdf"])
     })
     test("place the carrier at (0, 97)", () => {
         expect(gameboard_1.placeShipAt(carrier, 0, 97)).toBe("impossible")
