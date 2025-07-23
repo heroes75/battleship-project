@@ -1,4 +1,4 @@
-import { destroyer } from "./ship";
+import { battleship, destroyer } from "./ship";
 
 export default class Gameboard {
     constructor() {
@@ -7,36 +7,60 @@ export default class Gameboard {
         this.allShipSunk = false
     }
 
-    placeShipAt(ship, x, y) {
-        if(ship.mark === "d") {
-            for (let i = 0; i < 2; i++) {
-            this.board[0][i] = "d"
-        }}
-        if(ship.mark === "s") {
-            for (let i = 0; i < 3; i++) {
-                this.board[5 + i][5] = "s"
-            }
+    isOutOfBound(x, ship) {
+        return x + ship.length > 9
+    }
+    isAlreadyMarked(x, y) {
+        return this.board[x][y] !== ""
+    }
+
+    placeShipAtHorizontally(ship, x, y) {
+        if(this.isOutOfBound(y, ship)) return "impossible";
+        if(this.isAlreadyMarked(x, y)) return "impossible";
+
+        for (let i = 0; i < ship.length; i++) {
+            this.board[x][y + i] = ship.mark
+            
         }
-        if(ship.mark === "ca") {
-            return "impossible"
-        }
-        if(ship.mark === "cr") {
-            return "impossible"
+    }
+
+    placeShipAtVertically(ship, x, y) {
+        if (this.isOutOfBound(x, ship)) return "impossible"
+        if(this.isAlreadyMarked(x, y)) return "impossible";
+
+        for (let i = 0; i < ship.length; i++) {
+            this.board[x + i][y] = ship.mark
+            
         }
     }
 
     receiveAttack(x, y) {
+
+        
         if (x === 0 && y === 1) {
             this.board[0][1] = "dH"
             destroyer.hit()
+        }
+
+        if (x === 9 && y === 0) {
+            this.board[9][0] = "bH"
+            battleship.hit()
         }
 
         if (x === 7 && y === 8) {
             this.board[7][8] = "O"
             this.history.push([7, 8]);
         }
+
+        if (x === 9 && y === 9) {
+            this.board[9][9] = "O"
+            this.history.push([9, 9]);
+        }
     }
     isAllShipSunk() {
+        if (battleship.sunk === false) {
+            return this.allShipSunk = false
+        }
         return this.allShipSunk = true
     }
 }

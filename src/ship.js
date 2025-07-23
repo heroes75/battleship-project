@@ -21,5 +21,5 @@ export default class Ship {
 export let destroyer = new Ship("d", 2, 0, false);
 export let submarine = new Ship("s", 3, 0);
 export let cruiser = new Ship("cr", 3, 0);
-export let battleship = new Ship("b", 4, 0);
+export let battleship = new Ship("b", 4, 0, false);
 export let carrier = new Ship("ca", 5, 0);
