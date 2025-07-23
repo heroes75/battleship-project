@@ -1,14 +1,10 @@
 /* eslint-disable no-undef */
 
+import { destroyer, carrier, cruiser, battleship, submarine } from "./ship";
 import Ship from "./ship";
 import Gameboard from "./gameboard";
 
 
-let destroyer = new Ship("d", 2, 0, false);
-let submarine = new Ship("s", 3, 0);
-let cruiser = new Ship("cr", 3, 0);
-let battleship = new Ship("b", 4, 0);
-let carrier = new Ship("ca", 5, 0);
 
 let gameboard_1 = new Gameboard()
 
@@ -30,14 +26,12 @@ describe("test first game board", () => {
         let arrayOfMark = [];
         for (let i = 0; i < submarine.length; i++) {
             arrayOfMark.push(gameboard_1.board[5 + i][5])
-            console.log(gameboard_1.board[0][5]);
         }
         expect(arrayOfMark.every(el => el === submarine.mark)).toBe(true)
-        //expect(submarine.length).toEqual(7)
-        expect(gameboard_1.board).toEqual(["1", "r", "44s", "sdf"])
+        expect(arrayOfMark).toEqual(["s", "s", "s"])
     })
-    test("place the carrier at (0, 97)", () => {
-        expect(gameboard_1.placeShipAt(carrier, 0, 97)).toBe("impossible")
+    test("place the carrier at (0, 9)", () => {
+        expect(gameboard_1.placeShipAt(carrier, 0, 9)).toBe("impossible")
     })
     test("place the cruiser and  destroyer at the same line", () => {
         expect(gameboard_1.placeShipAt(cruiser, 0, 1)).toBe("impossible")
@@ -52,9 +46,9 @@ describe("test receiveAttack function", () => {
         expect(destroyer.hits).toBe(1);
     });
     test("attack a empty case should return 'O'", () => {
-        gameboard_1.receiveAttack(0, 1);
-        expect(gameboard_1.board[6][3]).toBe("O");
-        expect(gameboard_1.history[gameboard_1.history.length - 1]).toBe([6, 3]);
+        gameboard_1.receiveAttack(7, 8);
+        expect(gameboard_1.board[7][8]).toBe("O");
+        expect(gameboard_1.history[gameboard_1.history.length - 1]).toEqual([7, 8]);
     });
 })
 
@@ -65,6 +59,7 @@ describe("test if all ship sunk", () => {
         cruiser.sunk = true;
         battleship.sunk = true;
         carrier.sunk = true;
-        expect(allShipSunk).toBe(true)
+        gameboard_1.isAllShipSunk()
+        expect(gameboard_1.allShipSunk).toBe(true)
     })
 })
