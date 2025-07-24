@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 
 import { destroyer, carrier, cruiser, battleship, submarine } from "./ship";
-import Ship from "./ship";
 import Gameboard from "./gameboard";
 
 
@@ -46,11 +45,21 @@ describe("test receiveAttack function", () => {
         expect(gameboard_1.board[0][1]).toBe("dH");
         expect(destroyer.hits).toBe(1);
     });
+    test("attack a ship twice at the same case should do nothing", () => {
+        gameboard_1.receiveAttack(0, 1);
+        expect(gameboard_1.board[0][1]).toBe("dH");
+        expect(destroyer.hits).toBe(1);
+    })
     test("attack a empty case should return 'O'", () => {
         gameboard_1.receiveAttack(7, 8);
         expect(gameboard_1.board[7][8]).toBe("O");
         expect(gameboard_1.history[gameboard_1.history.length - 1]).toEqual([7, 8]);
     });
+    test("attack a empty case twice should do nothing", () => {
+        gameboard_1.receiveAttack(7, 8);
+        expect(gameboard_1.board[7][8]).toBe("O");
+        expect(gameboard_1.history[gameboard_1.history.length - 1]).toEqual([7, 8]);
+    })
 })
 
 describe("test if all ship sunk", () => {
@@ -105,11 +114,21 @@ describe("test receiveAttack function (2)", () => {
         expect(gameboard_2.board[9][0]).toBe("bH");
         expect(battleship.hits).toBe(1);
     });
+    test("attack a ship twice at the same case should do nothing (2)", () => {
+        gameboard_2.receiveAttack(9, 0);
+        expect(gameboard_2.board[9][0]).toBe("bH");
+        expect(battleship.hits).toBe(1);
+    })
     test("attack a empty case should return 'O'", () => {
         gameboard_2.receiveAttack(9, 9);
         expect(gameboard_2.board[9][9]).toBe("O");
         expect(gameboard_2.history[gameboard_2.history.length - 1]).toEqual([9, 9]);
     });
+    test("attack a empty case twice should do nothing (2)", () => {
+        gameboard_2.receiveAttack(9, 9);
+        expect(gameboard_2.board[9][9]).toBe("O");
+        expect(gameboard_2.history[gameboard_2.history.length - 1]).toEqual([9, 9]);
+    })
 })
 
 describe("test if all ship sunk (2)", () => {

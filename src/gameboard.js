@@ -1,9 +1,10 @@
-import { battleship, destroyer } from "./ship";
+//import { battleship, destroyer } from "./ship";
 
 export default class Gameboard {
     constructor() {
         this.board = Array(10).fill("").map(() => new Array(10).fill(""));
         this.history = [];
+        this.allShip = [];
         this.allShipSunk = false
     }
 
@@ -20,47 +21,35 @@ export default class Gameboard {
 
         for (let i = 0; i < ship.length; i++) {
             this.board[x][y + i] = ship.mark
-            
         }
+        this.allShip.push(ship)
     }
 
     placeShipAtVertically(ship, x, y) {
-        if (this.isOutOfBound(x, ship)) return "impossible"
+        if(this.isOutOfBound(x, ship)) return "impossible";
         if(this.isAlreadyMarked(x, y)) return "impossible";
 
         for (let i = 0; i < ship.length; i++) {
             this.board[x + i][y] = ship.mark
-            
         }
+        this.allShip.push(ship)
     }
 
     receiveAttack(x, y) {
 
+        const marked = this.isAlreadyMarked(x, y)
+        if(marked && !this.board[x][y].endsWith("H") && this.board[x][y] !== "O") {
+            const markShip = this.allShip.filter(el => el.mark === this.board[x][y]);
+            this.board[x][y] += "H"
+            markShip[0].hit()
+        }
         
-        if (x === 0 && y === 1) {
-            this.board[0][1] = "dH"
-            destroyer.hit()
-        }
-
-        if (x === 9 && y === 0) {
-            this.board[9][0] = "bH"
-            battleship.hit()
-        }
-
-        if (x === 7 && y === 8) {
-            this.board[7][8] = "O"
-            this.history.push([7, 8]);
-        }
-
-        if (x === 9 && y === 9) {
-            this.board[9][9] = "O"
-            this.history.push([9, 9]);
+        if(!marked) {
+            this.board[x][y] = "O"
+            this.history.push([x, y])
         }
     }
     isAllShipSunk() {
-        if (battleship.sunk === false) {
-            return this.allShipSunk = false
-        }
-        return this.allShipSunk = true
+        return this.allShipSunk = this.allShip.every(el => el.sunk === true)
     }
 }
