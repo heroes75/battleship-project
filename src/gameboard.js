@@ -42,12 +42,15 @@ export default class Gameboard {
             const markShip = this.allShip.filter(el => el.mark === this.board[x][y]);
             this.board[x][y] += "H"
             markShip[0].hit()
+            return true
         }
         
         if(!marked) {
             this.board[x][y] = "O"
-            this.history.push([x, y])
+            this.history.push([x, y]);
+            return true
         }
+        return false
     }
     isAllShipSunk() {
         return this.allShipSunk = this.allShip.every(el => el.sunk === true)
