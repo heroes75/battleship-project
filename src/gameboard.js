@@ -40,8 +40,9 @@ export default class Gameboard {
         const marked = this.isAlreadyMarked(x, y)
         if(marked && !this.board[x][y].endsWith("H") && this.board[x][y] !== "O") {
             const markShip = this.allShip.filter(el => el.mark === this.board[x][y]);
-            this.board[x][y] += "H"
-            markShip[0].hit()
+            this.board[x][y] += "H";
+            markShip[0].hit();
+            markShip[0].isSunk();
             return true
         }
         
