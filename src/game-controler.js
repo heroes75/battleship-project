@@ -1,5 +1,6 @@
 import ships from "./the-ships";
 import Ship from "./ship"
+import { Computer } from "./player";
 
 export class GameController {
     constructor(playerOne, playerTwo) {
@@ -32,11 +33,15 @@ export class GameController {
     }
 
     switchAimBoard() {
+        if (this.activePlayer)
         return this.aimBoard = this.getAimBoard() === this.playerTwo.hisBoard ? this.playerOne.hisBoard : this.playerTwo.hisBoard;
     }
 
     playRound(x, y) {
-        const attack = this.aimBoard.receiveAttack(x, y);
+
+        const attack = this.activePlayer instanceof Computer 
+            ? this.aimBoard.receiveAttack(this.activePlayer.autoMark()[0],this.activePlayer.autoMark()[1]) 
+            : this.aimBoard.receiveAttack(x, y);
         if(attack === false || this.isWinner()) return
         //if(this.aimBoard.isAllShipSunk()) return `${this.activePlayer}is winner`
         this.switchPlayer();
