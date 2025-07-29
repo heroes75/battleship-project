@@ -1,0 +1,20 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+
+}
+
+#board-container {
+    display: grid;
+    grid-template-rows: repeat(10, 50px);
+    grid-template-columns: repeat(10, 50px);
+    width: 500px;
+}
+
+/* .case {
+    background-color: aqua;
+} */
