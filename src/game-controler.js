@@ -3,6 +3,7 @@ import Ship from "./ship"
 import { Computer } from "./player";
 //import displayBoard from "./display-board";
 import displayBoardIngame from "./display-board-ingame";
+//import displayAimBoard from "./display-aimBoard";
 
 export class GameController {
     constructor(playerOne, playerTwo) {
@@ -19,7 +20,7 @@ export class GameController {
     }
 
     placeShipPlayer_2() {
-        this.playerTwo.hisBoard.placeShipAtHorizontally(new Ship(ships[0]), 0, 0);
+        this.playerTwo.hisBoard.placeShipAtVertically(new Ship(ships[0]), 0, 0);
         //this.playerOne.placeShipAtHorizontally(new Ship(ships[1]), 1, 0);
         //displayBoard(this.playerTwo.hisBoard.board)
     }
@@ -43,17 +44,22 @@ export class GameController {
 
     playRound(x, y) {
 
+        if(this.isWinner()) return
         const attack = this.activePlayer instanceof Computer 
             ? this.aimBoard.receiveAttack(this.activePlayer.autoMark()[0],this.activePlayer.autoMark()[1]) 
             : this.aimBoard.receiveAttack(x, y);
+        //displayBoardIngame(this.activePlayer.hisBoard.board, this.aimBoard.board, this)
         if(attack === false || this.isWinner()) return
-        //if(this.aimBoard.isAllShipSunk()) return `${this.activePlayer}is winner`
-        this.switchPlayer();
-        this.switchAimBoard();
-        displayBoardIngame(this.activePlayer.hisBoard.board, this.aimBoard.board, this)
+        //if(this.aimBoard.isAllShipSunk()) return `${this.activePlayer}is winner`;
+        setTimeout(() => {
+            this.switchPlayer();
+            this.switchAimBoard();
+            displayBoardIngame(this.activePlayer.hisBoard.board, this.aimBoard.board, this)
+        }, 150);
+        
     }
 
     isWinner() {
-        if(this.aimBoard.isAllShipSunk()) return this.activePlayer
+        if(this.aimBoard.isAllShipSunk()) return this.activePlayer;
     }
 }

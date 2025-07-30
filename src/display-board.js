@@ -1,4 +1,5 @@
 export default function displayBoard(board) {
+    board.innerHTML = ""
     const boardContainer = document.createElement("div");
     boardContainer.id = "board-container";
     boardContainer.style.height = "500px"
@@ -11,7 +12,7 @@ export default function displayBoard(board) {
             box.style.width = "50px";
             box.style.height = "50px";
             //box.style.borderColor = "blue"
-            box.style.border = "1px solid blue"
+            box.style.border = "1px solid orange"
             boardContainer.appendChild(box)
         }
     }
@@ -27,7 +28,7 @@ function caseDisplay(boardElement, box) {
             box.style.backgroundColor = "black";
             break;
         case "O":
-            box.backgroundColor = "green";
+            box.style.backgroundColor = "blue";
             break;
         case "dH":
         case "sH":
