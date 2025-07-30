@@ -1,7 +1,8 @@
 import ships from "./the-ships";
 import Ship from "./ship"
 import { Computer } from "./player";
-import displayBoard from "./display-board";
+//import displayBoard from "./display-board";
+import displayBoardIngame from "./display-board-ingame";
 
 export class GameController {
     constructor(playerOne, playerTwo) {
@@ -14,13 +15,13 @@ export class GameController {
     placeShipPlayer_1() {
         this.playerOne.hisBoard.placeShipAtHorizontally(new Ship(ships[0]), 0, 0);
         //this.playerOne.placeShipAtHorizontally(new Ship(ships[1]), 1, 0);
-        displayBoard(this.playerOne.hisBoard.board)
+        //displayBoard(this.playerOne.hisBoard.board)
     }
 
     placeShipPlayer_2() {
         this.playerTwo.hisBoard.placeShipAtHorizontally(new Ship(ships[0]), 0, 0);
         //this.playerOne.placeShipAtHorizontally(new Ship(ships[1]), 1, 0);
-        displayBoard(this.playerTwo.hisBoard.board)
+        //displayBoard(this.playerTwo.hisBoard.board)
     }
     
     getActivePlayer() {
@@ -47,9 +48,9 @@ export class GameController {
             : this.aimBoard.receiveAttack(x, y);
         if(attack === false || this.isWinner()) return
         //if(this.aimBoard.isAllShipSunk()) return `${this.activePlayer}is winner`
-        displayBoard(this.aimBoard)
         this.switchPlayer();
         this.switchAimBoard();
+        displayBoardIngame(this.activePlayer.hisBoard.board, this.aimBoard.board, this)
     }
 
     isWinner() {

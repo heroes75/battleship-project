@@ -5,6 +5,7 @@ html, body {
 
 body {
     display: flex;
+    gap: 1%;
 
 }
 
