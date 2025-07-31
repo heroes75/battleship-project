@@ -12,6 +12,8 @@ export class Computer {
         while (this.historyOfMark.some(el => el[0] === x && el[1] === y) && this.historyOfMark.length !== 0) {
             x = Math.floor(Math.random() * 10);
             y = Math.floor(Math.random() * 10);
+            console.log({x, y});
+            
         }
         this.historyOfMark.push([x, y])
         console.log([x , y]);

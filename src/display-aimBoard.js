@@ -7,6 +7,7 @@ export default function displayAimBoard(board, game) {
     boardContainer.style.height = "500px"
     document.querySelector("body").appendChild(boardContainer);
     console.log(board.length);
+    if(game.activePlayer instanceof Computer) game.playRound()
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
             const box = document.createElement("div");
@@ -25,7 +26,6 @@ export default function displayAimBoard(board, game) {
             boardContainer.appendChild(box)
         }
     }
-    if(game.activePlayer instanceof Computer) game.playRound()
 }
 
 function caseDisplay(boardElement, box) {

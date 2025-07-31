@@ -52,5 +52,6 @@ describe("test one real player vs computer with one boat", () => {
             game.playRound();
             game.playRound(0, 1);
             expect(game.isWinner()).toEqual(player_1)
+            expect(game.isWinner()).toEqual(player_1)
         })
 })
