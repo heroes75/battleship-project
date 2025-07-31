@@ -3,7 +3,7 @@ import { GameController } from "./game-controler"
 import Player, { Computer } from "./player"
 
 export default function screenControler() {
-    const game = new GameController(new Player("player_1"), new Computer());
+    const game = new GameController(new Player("player_1"), new Player("rtggd"));
     game.placeShipPlayer_1()
     game.placeShipPlayer_2()
     displayBoardIngame(game.activePlayer.hisBoard.board, game.aimBoard.board, game);

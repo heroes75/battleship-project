@@ -32,6 +32,25 @@ export class GameController {
         //this.playerOne.placeShipAtHorizontally(new Ship(ships[1]), 1, 0);
         //displayBoard(this.playerTwo.hisBoard.board)
     }
+
+    randomlyPlaceShip(player) {
+        const func = [
+            player.hisBoard.placeShipAtHorizontally,
+            player.hisBoard.placeShipAtVertically
+        ]
+
+        for (let i = 0; i < ships.length; i++) {
+            const OneOrTwo = () => Math.floor(Math.random() * 2);
+            const betweenOneAndNine = () => Math.floor(Math.random() * 10)
+            let placedShip = player.hisBoard.placeShipAtHorizontally(new Ship(ships[i]), betweenOneAndNine(), betweenOneAndNine());
+            console.log(placedShip);
+            
+            while (placedShip === "impossible") {
+                placedShip = player.hisBoard.placeShipAtHorizontally(new Ship(ships[i]), betweenOneAndNine(), betweenOneAndNine());
+            }
+            
+        }
+    }
     
     getActivePlayer() {
         return this.activePlayer
