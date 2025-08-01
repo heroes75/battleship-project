@@ -6,7 +6,9 @@ html, body {
 body {
     display: flex;
     gap: 1%;
-
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 #board-container {
@@ -16,6 +18,64 @@ body {
     width: 500px;
 }
 
-/* .case {
-    background-color: aqua;
-} */
+#chooseContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #1F2937;
+    padding: 50px;
+    border-radius: 25px;
+}
+
+#pvp, #pvc {
+    font-size: larger;
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 7px 12px 7px 12px;
+}
+
+#title-of-choose {
+    align-self: center;
+    font-weight: 900;
+    font-size: large;
+}
+
+#form-container {
+    background-color: #1F2937;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+#input1-Container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+#input2-Container {
+    margin-bottom: 11px;
+}
+
+#label-input1, #label-input2 {
+    display: block;
+    font-size: large;
+    font-weight: 500;
+}
+
+#label-input2 {
+    margin-bottom: 7px;
+}
+
+#button-container {
+    width: 100%;
+}
+#submit {
+    width: 77px;
+    text-align: center;
+    margin:  0 auto;
+    display: block;
+    padding: 7px 13px 7px 13px;
+    border-radius: 11px;
+}

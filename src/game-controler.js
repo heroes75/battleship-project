@@ -19,8 +19,6 @@ export class GameController {
         this.playerOne.hisBoard.placeShipAtHorizontally(new Ship(ships[2]), 2, 0);
         this.playerOne.hisBoard.placeShipAtHorizontally(new Ship(ships[3]), 3, 0);
         this.playerOne.hisBoard.placeShipAtHorizontally(new Ship(ships[4]), 4, 0);
-        //this.playerOne.placeShipAtHorizontally(new Ship(ships[1]), 1, 0);
-        //displayBoard(this.playerOne.hisBoard.board)
     }
 
     placeShipPlayer_2() {
@@ -29,28 +27,30 @@ export class GameController {
         this.playerTwo.hisBoard.placeShipAtVertically(new Ship(ships[2]), 0, 2);
         this.playerTwo.hisBoard.placeShipAtVertically(new Ship(ships[3]), 0, 3);
         this.playerTwo.hisBoard.placeShipAtVertically(new Ship(ships[4]), 0, 4);
-        //this.playerOne.placeShipAtHorizontally(new Ship(ships[1]), 1, 0);
-        //displayBoard(this.playerTwo.hisBoard.board)
     }
 
     randomlyPlaceShip(player) {
-        const func = [
-            player.hisBoard.placeShipAtHorizontally,
-            player.hisBoard.placeShipAtVertically
-        ]
+        player.hisBoard.eraseBoard()
+        player.hisBoard.resetAllShip()
 
         for (let i = 0; i < ships.length; i++) {
             const OneOrTwo = () => Math.floor(Math.random() * 2);
             const betweenOneAndNine = () => Math.floor(Math.random() * 10)
-            let placedShip = player.hisBoard.placeShipAtHorizontally(new Ship(ships[i]), betweenOneAndNine(), betweenOneAndNine());
+            let placedShip = OneOrTwo() === 1 ?
+             player.hisBoard.placeShipAtHorizontally(new Ship(ships[i]), betweenOneAndNine(), betweenOneAndNine()) 
+             :player.hisBoard.placeShipAtVertically(new Ship(ships[i]), betweenOneAndNine(), betweenOneAndNine());
             console.log(placedShip);
             
             while (placedShip === "impossible") {
-                placedShip = player.hisBoard.placeShipAtHorizontally(new Ship(ships[i]), betweenOneAndNine(), betweenOneAndNine());
+                placedShip = OneOrTwo() === 1 ?
+             player.hisBoard.placeShipAtHorizontally(new Ship(ships[i]), betweenOneAndNine(), betweenOneAndNine()) 
+             :player.hisBoard.placeShipAtVertically(new Ship(ships[i]), betweenOneAndNine(), betweenOneAndNine());
             }
             
         }
     }
+
+    
     
     getActivePlayer() {
         return this.activePlayer
@@ -84,6 +84,9 @@ export class GameController {
             const attack = this.aimBoard.receiveAttack(x, y);;
             displayBoardIngame(this.activePlayer.hisBoard.board, this.aimBoard.board, this)
             if(attack === false || this.isWinner()) return;
+            console.log(this.isWinner());
+            console.log(this.playerTwo.hisBoard.allShip);
+            
             setTimeout(() => {
                 this.switchPlayer();
                 this.switchAimBoard();
@@ -91,15 +94,6 @@ export class GameController {
             }, 150);
             
         }
-        //const attack = this.activePlayer instanceof Computer 
-            //? this.aimBoard.receiveAttack(this.activePlayer.autoMark()[0],this.activePlayer.autoMark()[1]) 
-            //: this.aimBoard.receiveAttack(x, y);
-        //displayBoardIngame(this.activePlayer.hisBoard.board, this.aimBoard.board, this)
-        //if(attack === false || this.isWinner()) return
-        //if(this.aimBoard.isAllShipSunk()) return `${this.activePlayer}is winner`;
-        //setTimeout(() => {
-            
-        //}, 150);
         
     }
 

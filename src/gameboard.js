@@ -20,6 +20,10 @@ export default class Gameboard {
         if(this.isAlreadyMarked(x, y)) return "impossible";
 
         for (let i = 0; i < ship.length; i++) {
+            if(this.isAlreadyMarked(x, y + i)) return "impossible";
+        }
+
+        for (let i = 0; i < ship.length; i++) {
             this.board[x][y + i] = ship.mark
         }
         this.allShip.push(ship)
@@ -28,6 +32,10 @@ export default class Gameboard {
     placeShipAtVertically(ship, x, y) {
         if(this.isOutOfBound(x, ship)) return "impossible";
         if(this.isAlreadyMarked(x, y)) return "impossible";
+
+        for (let i = 0; i < ship.length; i++) {
+            if(this.isAlreadyMarked(x + i, y)) return "impossible";
+        }
 
         for (let i = 0; i < ship.length; i++) {
             this.board[x + i][y] = ship.mark
@@ -55,5 +63,19 @@ export default class Gameboard {
     }
     isAllShipSunk() {
         return this.allShipSunk = this.allShip.every(el => el.sunk === true)
+    }
+
+    eraseBoard() {
+        for (let i = 0; i < this.board.length; i++) {
+            for (let j = 0; j < this.board[i].length; j++) {
+                this.board[i][j] = ""
+                
+            }
+            
+        }
+    }
+
+    resetAllShip() {
+        this.allShip = []
     }
 }
