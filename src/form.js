@@ -35,9 +35,9 @@ export default function form(mode) {
   button.textContent = "submit";
   label1.textContent = "enter name of player 1";
   label2.textContent = "enter name of player 2";
-  input1.placeholder = "ex. inuyasha"
-  input2.placeholder = "ex. kagome"
-  presentationGame(presentationContainer)
+  input1.placeholder = "ex. inuyasha";
+  input2.placeholder = "ex. kagome";
+  presentationGame(presentationContainer);
   if (mode === "pvc") input2Container.hidden = true;
   body.appendChild(presentationContainer);
   body.appendChild(container);
@@ -51,7 +51,11 @@ export default function form(mode) {
   buttonContainer.appendChild(button);
 
   button.addEventListener("click", () => {
-    if (input1.validity.valueMissing || (mode !== "pvc" && input2.validity.valueMissing)) return
+    if (
+      input1.validity.valueMissing ||
+      (mode !== "pvc" && input2.validity.valueMissing)
+    )
+      return;
     if (mode === "pvp") {
       const game = new GameController(
         new Player(input1.value),

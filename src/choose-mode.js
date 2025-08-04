@@ -21,7 +21,7 @@ export default function chooseMode() {
   chooseContainer.appendChild(title);
   chooseContainer.appendChild(twoPlayer);
   chooseContainer.appendChild(singlePlayer);
-  presentationGame(presentationContainer)
+  presentationGame(presentationContainer);
   twoPlayer.addEventListener("click", () => {
     form("pvp");
   });
