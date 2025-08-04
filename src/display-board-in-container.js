@@ -9,8 +9,8 @@ export default function displayBoardInContainer(board, container) {
       const box = document.createElement("div");
       box.classList.add("case");
       caseDisplay(board[i][j], box);
-      box.style.width = "50px";
-      box.style.height = "50px";
+      box.style.width = "clamp(25px, 2.5vw, 50px)";
+      box.style.height = "clamp(25px, 2.5vw, 50px)";
       //box.style.borderColor = "blue"
       box.style.border = "1px solid orange";
       boardContainer.appendChild(box);

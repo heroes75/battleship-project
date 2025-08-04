@@ -1,7 +1,36 @@
+@font-face {
+  font-family: "amaticbold";
+  src:
+    url("./fonts/amatic-bold-webfont.woff2") format("woff2"),
+    url("./fonts/amatic-bold-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "saiba-45outline";
+  src:
+    url("./fonts/saiba-45-outline-v1.1-webfont.woff2") format("woff2"),
+    url("./fonts/saiba-45-outline-v1.1-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "saiba-45regular";
+  src:
+    url("./fonts/saiba-45-regular-v1.1-webfont.woff2") format("woff2"),
+    url("./fonts/saiba-45-regular-v1.1-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 html,
 body {
   height: 100%;
+  width: 100%;
   margin: 0;
+  
 }
 
 body {
@@ -10,12 +39,13 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  overflow: scroll;
 }
 
 #board-container {
   display: grid;
-  grid-template-rows: repeat(10, 50px);
-  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, clamp(25px, 2.5vw, 50px));
+  grid-template-columns: repeat(10, clamp(25px, 2.5vw, 50px));
   width: 500px;
 }
 
@@ -74,6 +104,7 @@ body {
 #button-container {
   width: 100%;
 }
+
 #submit {
   width: 77px;
   text-align: center;
@@ -82,3 +113,41 @@ body {
   padding: 7px 13px 7px 13px;
   border-radius: 11px;
 }
+
+#input1,
+#input2 {
+  height: 25px;
+}
+
+#input1:invalid,
+#input2:invalid {
+  outline: red solid 3px;
+}
+
+#input1::placeholder,
+#input2::placeholder {
+  font-family: "amaticbold";
+  font-size: 22px;
+}
+
+#battleship-img {
+  width: 200px;
+  height: 175px;
+  margin: 0 auto;
+}
+
+#gameName {
+  font-size: 50px;
+  font-family: "saiba-45regular";
+}
+
+#image-container {
+  display: flex;
+  justify-content: center;
+}
+
+/* #container-game {
+  width: 100%;
+  height: 100%;
+}
+ */

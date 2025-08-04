@@ -1,16 +1,19 @@
 export default function displayBoard(board) {
-  document.querySelector("body").textContent = "";
+  const body = document.querySelector("body")
+  body.textContent = "";
+  body.style.cssText = "display: flex; flex-direction: row;"
   const boardContainer = document.createElement("div");
   boardContainer.id = "board-container";
-  boardContainer.style.height = "500px";
-  document.querySelector("body").appendChild(boardContainer);
+  boardContainer.style.height = "clamp(250px, 25vw, 500px)";
+  //boardContainer.style.width = "clamp(250px, 25vw, 500px)";
+  body.appendChild(boardContainer);
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
       const box = document.createElement("div");
       box.classList.add("case");
       caseDisplay(board[i][j], box);
-      box.style.width = "50px";
-      box.style.height = "50px";
+      box.style.width = "clamp(25px, 2.5vw, 50px)";
+      box.style.height = "clamp(25px, 2.5vw, 50px)";
       //box.style.borderColor = "blue"
       box.style.border = "1px solid orange";
       boardContainer.appendChild(box);

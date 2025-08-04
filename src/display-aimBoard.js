@@ -1,8 +1,8 @@
 import { Computer } from "./player";
 
 export default function displayAimBoard(board, game) {
-  board.innerHTML = "";
   const boardContainer = document.createElement("div");
+  //const body =
   boardContainer.id = "board-container";
   boardContainer.style.height = "500px";
   document.querySelector("body").appendChild(boardContainer);
