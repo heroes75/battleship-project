@@ -1,82 +1,88 @@
 //import { battleship, destroyer } from "./ship";
 
 export default class Gameboard {
-  constructor() {
-    this.board = Array(10)
-      .fill("")
-      .map(() => new Array(10).fill(""));
-    this.history = [];
-    this.allShip = [];
-    this.allShipSunk = false;
-  }
-
-  isOutOfBound(x, ship) {
-    return x + ship.length > 9;
-  }
-  isAlreadyMarked(x, y) {
-    return this.board[x][y] !== "";
-  }
-
-  placeShipAtHorizontally(ship, x, y) {
-    if (this.isOutOfBound(y, ship)) return "impossible";
-    if (this.isAlreadyMarked(x, y)) return "impossible";
-
-    for (let i = 0; i < ship.length; i++) {
-      if (this.isAlreadyMarked(x, y + i)) return "impossible";
+    constructor() {
+        this.board = Array(10)
+            .fill("")
+            .map(() => new Array(10).fill(""));
+        this.history = [];
+        this.allShip = [];
+        this.allShipSunk = false;
     }
 
-    for (let i = 0; i < ship.length; i++) {
-      this.board[x][y + i] = ship.mark;
+    isOutOfBound(x, ship) {
+        return x + ship.length > 9;
     }
-    this.allShip.push(ship);
-  }
-
-  placeShipAtVertically(ship, x, y) {
-    if (this.isOutOfBound(x, ship)) return "impossible";
-    if (this.isAlreadyMarked(x, y)) return "impossible";
-
-    for (let i = 0; i < ship.length; i++) {
-      if (this.isAlreadyMarked(x + i, y)) return "impossible";
+    isAlreadyMarked(x, y) {
+        return this.board[x][y] !== "";
     }
 
-    for (let i = 0; i < ship.length; i++) {
-      this.board[x + i][y] = ship.mark;
-    }
-    this.allShip.push(ship);
-  }
+    placeShipAtHorizontally(ship, x, y) {
+        if (this.isOutOfBound(y, ship)) return "impossible";
+        if (this.isAlreadyMarked(x, y)) return "impossible";
 
-  receiveAttack(x, y) {
-    const marked = this.isAlreadyMarked(x, y);
-    if (marked && !this.board[x][y].endsWith("H") && this.board[x][y] !== "O") {
-      const markShip = this.allShip.filter(
-        (el) => el.mark === this.board[x][y],
-      );
-      this.board[x][y] += "H";
-      markShip[0].hit();
-      markShip[0].isSunk();
-      return true;
+        for (let i = 0; i < ship.length; i++) {
+            if (this.isAlreadyMarked(x, y + i)) return "impossible";
+        }
+
+        for (let i = 0; i < ship.length; i++) {
+            this.board[x][y + i] = ship.mark;
+        }
+        this.allShip.push(ship);
     }
 
-    if (!marked) {
-      this.board[x][y] = "O";
-      this.history.push([x, y]);
-      return true;
-    }
-    return false;
-  }
-  isAllShipSunk() {
-    return (this.allShipSunk = this.allShip.every((el) => el.sunk === true));
-  }
+    placeShipAtVertically(ship, x, y) {
+        if (this.isOutOfBound(x, ship)) return "impossible";
+        if (this.isAlreadyMarked(x, y)) return "impossible";
 
-  eraseBoard() {
-    for (let i = 0; i < this.board.length; i++) {
-      for (let j = 0; j < this.board[i].length; j++) {
-        this.board[i][j] = "";
-      }
-    }
-  }
+        for (let i = 0; i < ship.length; i++) {
+            if (this.isAlreadyMarked(x + i, y)) return "impossible";
+        }
 
-  resetAllShip() {
-    this.allShip = [];
-  }
+        for (let i = 0; i < ship.length; i++) {
+            this.board[x + i][y] = ship.mark;
+        }
+        this.allShip.push(ship);
+    }
+
+    receiveAttack(x, y) {
+        const marked = this.isAlreadyMarked(x, y);
+        if (
+            marked &&
+            !this.board[x][y].endsWith("H") &&
+            this.board[x][y] !== "O"
+        ) {
+            const markShip = this.allShip.filter(
+                (el) => el.mark === this.board[x][y],
+            );
+            this.board[x][y] += "H";
+            markShip[0].hit();
+            markShip[0].isSunk();
+            return true;
+        }
+
+        if (!marked) {
+            this.board[x][y] = "O";
+            this.history.push([x, y]);
+            return true;
+        }
+        return false;
+    }
+    isAllShipSunk() {
+        return (this.allShipSunk = this.allShip.every(
+            (el) => el.sunk === true,
+        ));
+    }
+
+    eraseBoard() {
+        for (let i = 0; i < this.board.length; i++) {
+            for (let j = 0; j < this.board[i].length; j++) {
+                this.board[i][j] = "";
+            }
+        }
+    }
+
+    resetAllShip() {
+        this.allShip = [];
+    }
 }
