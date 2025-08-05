@@ -1,19 +1,25 @@
-export default function displayBoard(board) {
+import shipState from "./ship-state";
+
+export default function displayBoard(board, game) {
   const body = document.querySelector("body");
   const bigContainer = document.createElement("div");
   const nameOfBoard = document.createElement("div");
+  const boardContainer = document.createElement("div");
+  const stateOfShipContainer = document.createElement("div");
   body.textContent = "";
   body.style.cssText = "display: flex; flex-direction: row;";
-  const boardContainer = document.createElement("div");
-  boardContainer.id = "board-container";
-  bigContainer.id = "big-container";
-  nameOfBoard.id = "name-of-board";
+  boardContainer.classList.add("board-container");
+  bigContainer.classList.add("big-container");
+  nameOfBoard.classList.add("name-of-board");
+  stateOfShipContainer.classList.add("state-of-ship-container")
   nameOfBoard.textContent = "your Board";
   boardContainer.style.height = "clamp(300px, 30vw, 500px)";
   //boardContainer.style.width = "clamp(250px, 25vw, 500px)";
+  shipState(game.activePlayer, stateOfShipContainer)
   body.appendChild(bigContainer);
   bigContainer.appendChild(nameOfBoard);
   bigContainer.appendChild(boardContainer);
+  bigContainer.appendChild(stateOfShipContainer);
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
       const box = document.createElement("div");

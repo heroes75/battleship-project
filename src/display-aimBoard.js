@@ -1,18 +1,22 @@
 import { Computer } from "./player";
+import shipState from "./ship-state";
 
 export default function displayAimBoard(board, game) {
   const bigContainer = document.createElement("div");
   const boardContainer = document.createElement("div");
   const nameOfBoard = document.createElement("div");
-  //const body =
-  boardContainer.id = "board-container";
-  bigContainer.id = "big-container";
-  nameOfBoard.id = "name-of-board";
+  const stateOfShipContainer = document.createElement("div");
+  boardContainer.classList.add("board-container");
+  bigContainer.classList.add("big-container");
+  nameOfBoard.classList.add("name-of-board");
+  stateOfShipContainer.classList.add("state-of-ship-container")
   nameOfBoard.textContent = "Opponent Board";
   boardContainer.style.height = "clamp(300px, 30vw, 500px)";
   document.querySelector("body").appendChild(bigContainer);
+  shipState(game.activePlayer === game.playerOne ? game.playerTwo : game.playerOne, stateOfShipContainer)
   bigContainer.appendChild(nameOfBoard);
   bigContainer.appendChild(boardContainer);
+  bigContainer.appendChild(stateOfShipContainer);
   console.log(board.length);
   if (game.activePlayer instanceof Computer) game.playRound();
   for (let i = 0; i < board.length; i++) {
