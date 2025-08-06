@@ -6,17 +6,20 @@ export default function displayAimBoard(board, game) {
     const boardContainer = document.createElement("div");
     const nameOfBoard = document.createElement("div");
     const stateOfShipContainer = document.createElement("div");
+    const turnContainer = document.createElement("div");
     boardContainer.classList.add("board-container");
     bigContainer.classList.add("big-container");
     nameOfBoard.classList.add("name-of-board");
     stateOfShipContainer.classList.add("state-of-ship-container");
     nameOfBoard.textContent = "Opponent Board";
     boardContainer.style.height = "clamp(300px, 30vw, 500px)";
+    turnContainer.classList.add("turn-container2");
     document.querySelector("body").appendChild(bigContainer);
     shipState(
         game.activePlayer === game.playerOne ? game.playerTwo : game.playerOne,
         stateOfShipContainer,
     );
+    bigContainer.appendChild(turnContainer);
     bigContainer.appendChild(nameOfBoard);
     bigContainer.appendChild(boardContainer);
     bigContainer.appendChild(stateOfShipContainer);

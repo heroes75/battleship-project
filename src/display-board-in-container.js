@@ -1,7 +1,7 @@
 export default function displayBoardInContainer(board, container) {
     container.textContent = "";
     const boardContainer = document.createElement("div");
-    boardContainer.id = "board-container";
+    boardContainer.id = "board-container-of-place";
     boardContainer.style.height = "500px";
     container.appendChild(boardContainer);
     for (let i = 0; i < board.length; i++) {
@@ -9,8 +9,8 @@ export default function displayBoardInContainer(board, container) {
             const box = document.createElement("div");
             box.classList.add("case");
             caseDisplay(board[i][j], box);
-            box.style.width = "clamp(25px, 2.5vw, 50px)";
-            box.style.height = "clamp(25px, 2.5vw, 50px)";
+            box.style.width = "50px";
+            box.style.height = "";
             //box.style.borderColor = "blue"
             box.style.border = "1px solid orange";
             boardContainer.appendChild(box);

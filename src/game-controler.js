@@ -115,7 +115,15 @@ export class GameController {
         if (this.activePlayer instanceof Computer) {
             const mark = this.activePlayer.autoMark();
             const attack = this.aimBoard.receiveAttack(mark[0], mark[1]);
-            if (attack === false || this.isWinner()) return;
+
+            if (attack === false || this.isWinner()) {
+                displayBoardIngame(
+                    this.activePlayer.hisBoard.board,
+                    this.aimBoard.board,
+                    this,
+                );
+                return;
+            }
             this.switchPlayer();
             this.switchAimBoard();
             displayBoardIngame(

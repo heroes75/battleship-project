@@ -15,7 +15,7 @@ export default function displayBoard(board, game) {
     boardContainer.classList.add("board-container");
     bigContainer.classList.add("big-container");
     nameOfBoard.classList.add("name-of-board");
-    turnContainer.id = "turn-container";
+    turnContainer.classList.add("turn-container");
     winnerDisplayContainer.id = "winner-display-container";
     stateOfShipContainer.classList.add("state-of-ship-container");
     nameOfBoard.textContent = "your Board";

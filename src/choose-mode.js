@@ -4,6 +4,7 @@ import presentationGame from "./presentation-game";
 const body = document.querySelector("body");
 export default function chooseMode() {
     body.textContent = "";
+    body.style = "flex-direction: column";
     const chooseContainer = document.createElement("div");
     const presentationContainer = document.createElement("div");
     chooseContainer.id = "chooseContainer";

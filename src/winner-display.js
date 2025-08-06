@@ -1,4 +1,5 @@
 import chooseMode from "./choose-mode";
+import { Computer } from "./player";
 
 export default function winnerDisplay(player, container) {
     const winnerFrame = document.createElement("div");
@@ -8,10 +9,10 @@ export default function winnerDisplay(player, container) {
     winnerText.id = "winner-text";
     button.id = "winner-button";
     button.textContent = "RESTART";
-    winnerText.textContent = `${player.name} is the winner`;
+    winnerText.textContent = `${player instanceof Computer ? "Computer" : player.name} is the winner`;
     container.appendChild(winnerFrame);
-    winnerFrame.appendChild(button);
     winnerFrame.appendChild(winnerText);
+    winnerFrame.appendChild(button);
     button.addEventListener("click", () => {
         document.querySelector("body").textContent = "";
         chooseMode();
