@@ -20,6 +20,7 @@ export default function placeShipsInDOM(player, game) {
     const title = document.createElement("h2");
     const shipInCursor = [];
     const shipsToPlaceContainer = document.createElement("div");
+    let shipsCopy = [...ships];
     let isMaintain = false;
     let isInBoard = false;
     //button.id = `${player.name}`;
@@ -28,61 +29,60 @@ export default function placeShipsInDOM(player, game) {
     title.textContent = "place your ship " + player.name;
     shipsToPlaceContainer.id = "ships-to-place-container";
     shipsToPlaceContainer.style.cssText = "display: flex; gap: 10px";
-    ships.forEach((el) => {
-        const shipContainer = document.createElement("div");
-        shipContainer.style.display = "flex";
-        for (let i = 0; i < el.length; i++) {
-            const box = document.createElement("div");
-            box.style.cssText =
-                "width: 50px; height: 50px; background-color: blue;";
-            shipContainer.appendChild(box);
-        }
 
-        //shipsToPlaceContainer.addEventListener("mouseenter", (e) => {
-        //e.preventDefault();
-
-        boardContainer.addEventListener("mouseenter", () => {
-            isInBoard = true;
-        });
-
-        boardContainer.addEventListener("mouseleave", () => {
-            isInBoard = false;
-        });
-
-        //boardContainer.addEventListener("mouseout", () => {
-        //    isInBoard = false
-        //})
-
-        shipContainer.addEventListener("mousedown", (e) => {
-            isMaintain = true;
-            shipInCursor.push(el);
-            console.log(el);
-        });
-
-        boardContainer.addEventListener("mouseup", (e) => {
-            if (isMaintain === true && isInBoard === true) {
-                player.hisBoard.placeShipAtHorizontally(
-                    new Ship(shipInCursor[shipInCursor.length - 1]),
-                    +e.target.dataset.row,
-                    +e.target.dataset.column,
-                );
-                console.log(
-                    typeof e.target.dataset.row,
-                    e.target.dataset.column,
-                );
-                //shipInCursor.pop()
-
-                displayBoardInContainer(player.hisBoard.board, boardContainer);
-            }
-        });
-
-        window.addEventListener("mouseup", (e) => {
-            isMaintain = false;
-        });
-        //});
-
-        shipsToPlaceContainer.appendChild(shipContainer);
+    boardContainer.addEventListener("mouseenter", () => {
+        isInBoard = true;
     });
+
+    boardContainer.addEventListener("mouseleave", () => {
+        isInBoard = false;
+    });
+
+    boardContainer.addEventListener("mouseup", (e) => {
+        console.log("isMaintainis in boardContainer", isMaintain);
+        isInBoard = true;
+        if (
+            isMaintain === true &&
+            shipInCursor.length !== 0 /*&& isInBoard === true*/
+        ) {
+            player.hisBoard.placeShipAtHorizontally(
+                new Ship(shipInCursor[shipInCursor.length - 1]),
+                +e.target.dataset.row,
+                +e.target.dataset.column,
+            );
+            shipsCopy.splice(
+                shipsCopy.indexOf(shipInCursor[shipInCursor.length - 1]),
+                1,
+            );
+            console.log({ shipsCopy });
+
+            console.log(shipsCopy.indexOf(shipInCursor[0]));
+
+            displayShipsToPlace(shipsToPlaceContainer);
+            console.log(typeof e.target.dataset.row, e.target.dataset.column);
+            isMaintain = false;
+            console.log(shipInCursor);
+
+            shipInCursor.pop();
+
+            displayBoardInContainer(player.hisBoard.board, boardContainer);
+        }
+        console.log("shipInCursor in borad", shipInCursor)
+    });
+
+    window.addEventListener("mouseup", (e) => {
+        console.log("shipInCursor in window in", shipInCursor)
+        if (isInBoard === false) {
+            isMaintain = false;
+            shipInCursor.pop();
+            e.target.style.cursor = "crosshair";
+        }
+        console.log("shipInCursor in window out", shipInCursor)
+
+        //shipInCursor.pop()
+    });
+    //});
+
     body.appendChild(title);
     body.appendChild(boardContainer);
     body.appendChild(shipsToPlaceContainer);
@@ -116,5 +116,35 @@ export default function placeShipsInDOM(player, game) {
         container.appendChild(boardContainer);
     }
 
+    function displayShipsToPlace(container) {
+        container.textContent = "";
+        shipsCopy.forEach((el) => {
+            const shipContainer = document.createElement("div");
+            shipContainer.style.display = "flex";
+            for (let i = 0; i < el.length; i++) {
+                const box = document.createElement("div");
+                box.style.cssText =
+                    "width: 50px; height: 50px; background-color: blue;";
+                shipContainer.appendChild(box);
+            }
+
+            shipContainer.addEventListener("mousedown", (e) => {
+                e.target.style.cursor = "grab";
+                shipContainer.style.backgroundColor = "green"
+                isMaintain = true;
+                console.log("isMaintainis in shipcontainer", isMaintain);
+                if(shipInCursor.length !== 0) shipInCursor.pop()
+                
+                shipInCursor.push(el);
+                console.log("shipInCursor in shipContainer", shipInCursor);
+                
+                console.log({el});
+            });
+
+            container.appendChild(shipContainer);
+        });
+    }
+
     placeShips(player, boardContainer);
+    displayShipsToPlace(shipsToPlaceContainer);
 }
