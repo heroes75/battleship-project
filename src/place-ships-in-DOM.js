@@ -2,6 +2,7 @@ import displayBoard from "./display-board";
 import displayBoardInContainer from "./display-board-in-container";
 import { Computer } from "./player";
 import screenControler from "./screen-controller";
+import Ship from "./ship";
 import ships from "./the-ships";
 
 export default function placeShipsInDOM(player, game) {
@@ -19,6 +20,8 @@ export default function placeShipsInDOM(player, game) {
     const title = document.createElement("h2");
     const shipInCursor = [];
     const shipsToPlaceContainer = document.createElement("div");
+    let isMaintain = false;
+    let isInBoard = false;
     //button.id = `${player.name}`;
     button.textContent = "randomize";
     buttonSubmit.textContent = "Finish";
@@ -31,26 +34,52 @@ export default function placeShipsInDOM(player, game) {
         for (let i = 0; i < el.length; i++) {
             const box = document.createElement("div");
             box.style.cssText =
-                "width: 5px; height: 5px; background-color: black;";
+                "width: 50px; height: 50px; background-color: blue;";
             shipContainer.appendChild(box);
         }
 
-        shipsToPlaceContainer.addEventListener("mouseenter", (e) => {
-            e.preventDefault();
-            e.target.style.cursor = "pointer";
+        //shipsToPlaceContainer.addEventListener("mouseenter", (e) => {
+        //e.preventDefault();
 
-            shipContainer.addEventListener("mousedown", (e) => {
-                body.addEventListener("mousemove", (e) => {
-                    console.log(e.pageX, e.pageY)
-                    shipContainer.style.cssText = `position: absolute; top: ${e.pageY}px; left: ${e.pageX}px`;
-                });
-            });
+        boardContainer.addEventListener("mouseenter", () => {
+            isInBoard = true;
         });
 
-        body.addEventListener("mousemove", (e) => {
-            console.log(e.screenX, e.screenY);
-            
-        })
+        boardContainer.addEventListener("mouseleave", () => {
+            isInBoard = false;
+        });
+
+        //boardContainer.addEventListener("mouseout", () => {
+        //    isInBoard = false
+        //})
+
+        shipContainer.addEventListener("mousedown", (e) => {
+            isMaintain = true;
+            shipInCursor.push(el);
+            console.log(el);
+        });
+
+        boardContainer.addEventListener("mouseup", (e) => {
+            if (isMaintain === true && isInBoard === true) {
+                player.hisBoard.placeShipAtHorizontally(
+                    new Ship(shipInCursor[shipInCursor.length - 1]),
+                    +e.target.dataset.row,
+                    +e.target.dataset.column,
+                );
+                console.log(
+                    typeof e.target.dataset.row,
+                    e.target.dataset.column,
+                );
+                //shipInCursor.pop()
+
+                displayBoardInContainer(player.hisBoard.board, boardContainer);
+            }
+        });
+
+        window.addEventListener("mouseup", (e) => {
+            isMaintain = false;
+        });
+        //});
 
         shipsToPlaceContainer.appendChild(shipContainer);
     });

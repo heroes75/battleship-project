@@ -8,6 +8,8 @@ export default function displayBoardInContainer(board, container) {
         for (let j = 0; j < board[i].length; j++) {
             const box = document.createElement("div");
             box.classList.add("case");
+            box.dataset.row = i;
+            box.dataset.column = j;
             caseDisplay(board[i][j], box);
             box.style.width = "50px";
             box.style.height = "";
