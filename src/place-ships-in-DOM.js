@@ -20,15 +20,24 @@ export default function placeShipsInDOM(player, game) {
     const title = document.createElement("h2");
     const shipInCursor = [];
     const shipsToPlaceContainer = document.createElement("div");
+    const changeDirectionButton = document.createElement("button");
+    let vertically = false;
+
     let shipsCopy = [...ships];
     let isMaintain = false;
     let isInBoard = false;
-    //button.id = `${player.name}`;
     button.textContent = "randomize";
     buttonSubmit.textContent = "Finish";
+    changeDirectionButton.textContent =
+        vertically === false ? "horizontal" : "vertical";
+    button.classList.add("button-of-placement-ship");
+    buttonSubmit.classList.add("button-of-placement-ship");
+    changeDirectionButton.classList.add("button-of-placement-ship")
     title.textContent = "place your ship " + player.name;
     shipsToPlaceContainer.id = "ships-to-place-container";
-    shipsToPlaceContainer.style.cssText = "display: flex; gap: 10px";
+    buttonContainer.id = "button-container";
+    buttonContainer.style.cssText = "display: flex; gap: 10px; justify-content: center; height: 60px; align-items: center"
+    shipsToPlaceContainer.style.cssText = "display: flex; gap: 10px; width: 500px; flex-wrap: wrap";
 
     boardContainer.addEventListener("mouseenter", () => {
         isInBoard = true;
@@ -44,58 +53,55 @@ export default function placeShipsInDOM(player, game) {
         if (isMaintain === true) {
             const x = +e.target.dataset.row;
             const y = +e.target.dataset.column;
-            if (
-                player.hisBoard.isOutOfBound(y, shipInCursor[0]) ||
-                player.hisBoard.isAlreadyMarked(x, y)
-            ) {
-                for (let i = 0; i < shipInCursor[0].length  + y > 9 ? shipInCursor[0].length + y - 9 : shipInCursor[0].length; i++) {
-                    const el = document.getElementById(
-                        `c${e.target.dataset.row}${+e.target.dataset.column + i}`,
-                    );
-                    console.log(
-                        `c${e.target.dataset.row}${+e.target.dataset.column + i}`,
-                    );
-
-                    el.style.cssText =
-                        "background-color: red; opacity: 0.5; border: 1px solid orange";
+            if (vertically === false) {
+                for (let i = 0; i < shipInCursor[0].length; i++) {
+                    const el = document.getElementById(`c${x}${y + i}`);
+                    
+                    if (y + i <= 9) {
+                        el.style.cssText =
+                            "background-color: black; opacity: 0.5; border: 1px solid orange";
+                    }
                 }
-                return
-            }
-            for (let i = 0; i < shipInCursor[0].length; i++) {
-                const el = document.getElementById(
-                    `c${e.target.dataset.row}${+e.target.dataset.column + i}`,
-                );
-                console.log(
-                    `c${e.target.dataset.row}${+e.target.dataset.column + i}`,
-                );
-
-                el.style.cssText =
-                    "background-color: black; opacity: 0.5; border: 1px solid orange";
+            } else {
+                for (let i = 0; i < shipInCursor[0].length; i++) {
+                    const el = document.getElementById(`c${x + i}${y}`);
+                    console.log(
+                        "out",
+                        `c${e.target.dataset.row}${+e.target.dataset.column + i}`,
+                    );
+                    if (x + i <= 9) {
+                        el.style.cssText =
+                            "background-color: black; opacity: 0.5; border: 1px solid orange";
+                    }
+                }
             }
         }
     });
 
     boardContainer.addEventListener("mouseup", (e) => {
-        console.log("isMaintain in boardContainer", isMaintain);
-        console.log("shipInCursor in board first", shipInCursor);
         isInBoard = true;
         if (
             isMaintain === true &&
-            shipInCursor.length !== 0 /*&& isInBoard === true*/
+            shipInCursor.length !== 0
         ) {
-            const attack = player.hisBoard.placeShipAtHorizontally(
-                new Ship(shipInCursor[0]),
-                +e.target.dataset.row,
-                +e.target.dataset.column,
-            );
+            const attack =
+                vertically === false
+                    ? player.hisBoard.placeShipAtHorizontally(
+                          new Ship(shipInCursor[0]),
+                          +e.target.dataset.row,
+                          +e.target.dataset.column,
+                      )
+                    : player.hisBoard.placeShipAtVertically(
+                          new Ship(shipInCursor[0]),
+                          +e.target.dataset.row,
+                          +e.target.dataset.column,
+                      );
 
             if (attack !== "impossible") {
                 shipsCopy.splice(
                     shipsCopy.indexOf(shipInCursor[shipInCursor.length - 1]),
                     1,
                 );
-                console.log({ shipsCopy });
-
                 displayShipsToPlace(shipsToPlaceContainer);
             }
 
@@ -111,7 +117,6 @@ export default function placeShipsInDOM(player, game) {
     });
 
     window.addEventListener("mouseup", (e) => {
-        console.log("shipInCursor in window in", shipInCursor);
         if (isInBoard === false) {
             isMaintain = false;
             shipInCursor.pop();
@@ -119,16 +124,21 @@ export default function placeShipsInDOM(player, game) {
         }
         console.log("shipInCursor in window out", shipInCursor);
 
-        //shipInCursor.pop()
     });
-    //});
+
+    changeDirectionButton.addEventListener("click", (e) => {
+        vertically = vertically === false ? true : false;
+        e.target.textContent =
+            e.target.textContent === "horizontal" ? "vertical" : "horizontal";
+    });
 
     body.appendChild(title);
     body.appendChild(boardContainer);
     body.appendChild(shipsToPlaceContainer);
     body.appendChild(buttonContainer);
-    body.appendChild(buttonSubmit);
+    buttonContainer.appendChild(buttonSubmit);
     buttonContainer.appendChild(button);
+    buttonContainer.appendChild(changeDirectionButton);
     button.addEventListener("click", () => {
         game.randomlyPlaceShip(player);
         displayBoardInContainer(player.hisBoard.board, boardContainer);
@@ -142,13 +152,11 @@ export default function placeShipsInDOM(player, game) {
     });
     function placeShips(player, container) {
         randomizeShips(player, container);
-        //buttonRandomizeShips(player, container)
     }
 
     function randomizeShips(player, container) {
         container.textContent = "";
         const boardContainer = document.createElement("div");
-        //boardContainer.id = "board-container";
 
         boardContainer.textContent = "";
         displayBoardInContainer(player.hisBoard.board, container);

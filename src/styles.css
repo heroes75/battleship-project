@@ -241,3 +241,8 @@ body {
     padding: 15px 10px 15px 10px;
     border-radius: 10px;
 }
+
+.button-of-placement-ship {
+    padding: 10px 5px 10px 5px;
+    border-radius: 5px;
+}
