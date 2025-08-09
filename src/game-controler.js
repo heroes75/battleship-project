@@ -115,6 +115,7 @@ export class GameController {
         if (this.activePlayer instanceof Computer) {
             const mark = this.activePlayer.autoMark();
             const attack = this.aimBoard.receiveAttack(mark[0], mark[1]);
+            this.activePlayer.isHit(this, attack, mark[0], mark[1]);
 
             if (attack === false || this.isWinner()) {
                 displayBoardIngame(
