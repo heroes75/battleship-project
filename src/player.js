@@ -4,9 +4,14 @@ export class Computer {
     constructor() {
         this.hisBoard = new Gameboard();
         this.historyOfMark = [];
+        this.hitMark = []
+        this.hitShip =[]
+        this.hit = 0
+        this.validMoves = []
     }
 
     autoMark() {
+
         let x = Math.floor(Math.random() * 10);
         let y = Math.floor(Math.random() * 10);
         while (
@@ -23,6 +28,16 @@ export class Computer {
 
         return [x, y];
     }
+
+    isHit(game, mark, x, y) {
+        if(mark !== "") {
+            this.hitMark.push([x, y])
+            this.hitShip = game.aimBoard.allShips.filter(el => el.mark === mark);
+            this.hit++
+        }
+    }
+
+
 }
 
 export default class Player {

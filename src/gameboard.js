@@ -58,13 +58,13 @@ export default class Gameboard {
             this.board[x][y] += "H";
             markShip[0].hit();
             markShip[0].isSunk();
-            return true;
+            return this.board[x][y];
         }
 
         if (!marked) {
             this.board[x][y] = "O";
             this.history.push([x, y]);
-            return true;
+            return this.board[x][y];
         }
         return false;
     }
