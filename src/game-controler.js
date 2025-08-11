@@ -15,31 +15,11 @@ export class GameController {
     }
 
     placeShipPlayer_1() {
-        this.playerOne.hisBoard.placeShipAtHorizontally(
-            new Ship(ships[0]),
-            0,
-            0,
-        );
-        this.playerOne.hisBoard.placeShipAtHorizontally(
-            new Ship(ships[1]),
-            1,
-            0,
-        );
-        this.playerOne.hisBoard.placeShipAtHorizontally(
-            new Ship(ships[2]),
-            2,
-            0,
-        );
-        this.playerOne.hisBoard.placeShipAtHorizontally(
-            new Ship(ships[3]),
-            3,
-            0,
-        );
-        this.playerOne.hisBoard.placeShipAtHorizontally(
-            new Ship(ships[4]),
-            4,
-            0,
-        );
+        this.playerOne.hisBoard.placeShipAtVertically(new Ship(ships[0]), 0, 0);
+        this.playerOne.hisBoard.placeShipAtVertically(new Ship(ships[1]), 0, 1);
+        this.playerOne.hisBoard.placeShipAtVertically(new Ship(ships[2]), 0, 2);
+        this.playerOne.hisBoard.placeShipAtVertically(new Ship(ships[3]), 0, 3);
+        this.playerOne.hisBoard.placeShipAtVertically(new Ship(ships[4]), 0, 4);
     }
 
     placeShipPlayer_2() {
@@ -116,6 +96,7 @@ export class GameController {
         if (this.activePlayer instanceof Computer) {
             const mark = this.activePlayer.autoMark();
             const attack = this.aimBoard.receiveAttack(mark[0], mark[1]);
+            this.activePlayer.isHit(this, attack, mark[0], mark[1]);
 
             if (attack === false || this.isWinner()) {
                 displayBoardIngame(
