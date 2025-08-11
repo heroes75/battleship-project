@@ -139,6 +139,7 @@ export default function placeShipsInDOM(player, game) {
     buttonContainer.appendChild(button);
     buttonContainer.appendChild(changeDirectionButton);
     button.addEventListener("click", () => {
+        shipsToPlaceContainer.textContent = "";
         game.randomlyPlaceShip(player);
         displayBoardInContainer(player.hisBoard.board, boardContainer);
     });
