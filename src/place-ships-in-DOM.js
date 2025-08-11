@@ -31,12 +31,14 @@ export default function placeShipsInDOM(player, game) {
         vertically === false ? "horizontal" : "vertical";
     button.classList.add("button-of-placement-ship");
     buttonSubmit.classList.add("button-of-placement-ship");
-    changeDirectionButton.classList.add("button-of-placement-ship")
+    changeDirectionButton.classList.add("button-of-placement-ship");
     title.textContent = "place your ship " + player.name;
     shipsToPlaceContainer.id = "ships-to-place-container";
     buttonContainer.id = "button-container";
-    buttonContainer.style.cssText = "display: flex; gap: 10px; justify-content: center; height: 60px; align-items: center"
-    shipsToPlaceContainer.style.cssText = "display: flex; gap: 10px; width: 500px; flex-wrap: wrap";
+    buttonContainer.style.cssText =
+        "display: flex; gap: 10px; justify-content: center; height: 60px; align-items: center";
+    shipsToPlaceContainer.style.cssText =
+        "display: flex; gap: 10px; width: 500px; flex-wrap: wrap";
 
     boardContainer.addEventListener("mouseenter", () => {
         isInBoard = true;
@@ -55,7 +57,7 @@ export default function placeShipsInDOM(player, game) {
             if (vertically === false) {
                 for (let i = 0; i < shipInCursor[0].length; i++) {
                     const el = document.getElementById(`c${x}${y + i}`);
-                    
+
                     if (y + i <= 9) {
                         el.style.cssText =
                             "background-color: black; opacity: 0.5; border: 1px solid orange";
@@ -79,10 +81,7 @@ export default function placeShipsInDOM(player, game) {
 
     boardContainer.addEventListener("mouseup", (e) => {
         isInBoard = true;
-        if (
-            isMaintain === true &&
-            shipInCursor.length !== 0
-        ) {
+        if (isMaintain === true && shipInCursor.length !== 0) {
             const attack =
                 vertically === false
                     ? player.hisBoard.placeShipAtHorizontally(
@@ -122,7 +121,6 @@ export default function placeShipsInDOM(player, game) {
             e.target.style.cursor = "crosshair";
         }
         console.log("shipInCursor in window out", shipInCursor);
-
     });
 
     changeDirectionButton.addEventListener("click", (e) => {
