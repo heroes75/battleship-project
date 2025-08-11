@@ -1,4 +1,3 @@
-import displayBoard from "./display-board";
 import displayBoardInContainer from "./display-board-in-container";
 import { Computer } from "./player";
 import screenControler from "./screen-controller";
