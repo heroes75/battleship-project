@@ -3,6 +3,7 @@ import Ship from "./ship";
 import { Computer } from "./player";
 //import displayBoard from "./display-board";
 import displayBoardIngame from "./display-board-ingame";
+import passDeviceScreen from "./pass-device-screen";
 //import displayAimBoard from "./display-aimBoard";
 
 export class GameController {
@@ -146,11 +147,20 @@ export class GameController {
             setTimeout(() => {
                 this.switchPlayer();
                 this.switchAimBoard();
-                displayBoardIngame(
-                    this.activePlayer.hisBoard.board,
-                    this.aimBoard.board,
-                    this,
-                );
+                if (this.activePlayer instanceof Computer) {
+                    displayBoardIngame(
+                        this.activePlayer.hisBoard.board,
+                        this.aimBoard.board,
+                        this,
+                    );
+                    return;
+                }
+                passDeviceScreen(this);
+                //displayBoardIngame(
+                //    this.activePlayer.hisBoard.board,
+                //    this.aimBoard.board,
+                //    this,
+                //);
             }, 150);
         }
     }

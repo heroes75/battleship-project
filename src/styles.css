@@ -244,5 +244,19 @@ body {
 
 .button-of-placement-ship {
     padding: 10px 5px 10px 5px;
-    border-radius: 5px;
+    border-radius: 5px; 
+}
+#active-turn {
+    font-size: 20px;
+    font-family: "amaticbold";
+}
+
+#instruction {
+    font-size: 25px;
+    font-family: "amaticbold";
+}
+
+#pass-button {
+    padding: 15px 10px 15px 10px;
+    font-size: 17px;
 }
